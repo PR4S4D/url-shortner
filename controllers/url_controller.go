@@ -16,7 +16,9 @@ func GetAllUrlData(c *fiber.Ctx) error {
 		return c.JSON(err)
 	}
 
-	return c.JSON(urlData)
+	return c.Render("table", fiber.Map{
+		"urlData": urlData,
+	})
 }
 
 func Shorten(c *fiber.Ctx) error {
@@ -36,12 +38,14 @@ func Shorten(c *fiber.Ctx) error {
 	}
 
 	res, err := repository.NewUrlRepository(database.DB).Save(req.Url, shortUrl)
-	response := new(models.Result)
-	response.Success = res == 1
-	response.Error = err
-	response.ShortUrl = shortUrl
+	result := new(models.Result)
+	result.Success = res == 1
+	result.Error = err
+	result.ShortUrl = string(c.Context().Referer()) + shortUrl
 
-	return c.JSON(response)
+	return c.Render("result", fiber.Map{
+		"result": result,
+	})
 }
 
 func GetUrlData(c *fiber.Ctx) error {

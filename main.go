@@ -6,6 +6,7 @@ import (
 	"url-shortner/database"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html/v2"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -13,12 +14,21 @@ func main() {
 
 	database.InitializeDB()
 
-	app := fiber.New()
-	v1 := app.Group("api/v1")
-	v1.Get("/url", controllers.GetAllUrlData)
-	v1.Post("/shorten", controllers.Shorten)
-	v1.Get(":short_url", controllers.GetUrlData)
+	engine := html.New("./views", ".html")
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
+	app.Static("/", "./public")
 
-	log.Fatal(app.Listen(":9000"))
+	app.Get("/url", controllers.GetAllUrlData)
+	app.Post("/shorten", controllers.Shorten)
+	app.Get(":short_url", controllers.GetUrlData)
+
+	app.Get("/", func(c *fiber.Ctx) error {
+		// Render index
+		return c.Render("index", nil)
+	})
+
+	log.Fatal(app.Listen("127.0.0.1:9000"))
 
 }

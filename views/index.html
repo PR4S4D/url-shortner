@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-teal-50">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="images/favicon-gopher.png" sizes="any">
+  <title>URL Shortner</title>
+  <script src="js/htmx.min.js"></script>
+  <script src="js/json-enc.js"></script>
+  <script src="js/tailwind.min.js"></script>
+</head>
+
+<body class="flex flex-col align-center items-center m-10 b">
+
+  <form hx-post="/shorten" hx-ext='json-enc' hx-target="#content" hx-swap="innerHTML"
+    hx-on::after-request="this.reset()">
+
+    <input name="url" type="url" pattern="https?://.+" required placeholder="URL to Shorten"
+      class="w-80 rounded-md border border-gray-300 p-3" />
+
+    <input type="submit"
+      class="inline-flex items-center gap-x-1.5 rounded-md bg-teal-600 p-3.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600" />
+
+  </form>
+
+  <button hx-get="/url" class="underline px-10" hx-target="#content" hx-swap="innerHTML">
+    View All Data
+  </button>
+
+  <main class="p-2">
+    <div id="content" />
+  </main>
+
+</body>
+
+</html>

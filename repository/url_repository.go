@@ -11,7 +11,7 @@ type UrlRepository struct {
 }
 
 const urlInsertQuery = `INSERT INTO url (url, short_url) VALUES (?, ?)`
-const urlSelectAllQuery = `select * from url`
+const urlSelectAllQuery = `select * from url order by id desc limit 500`
 const findUrlByShortUrlQuery = `select * from url where short_url = ?`
 
 var UrlRepo *UrlRepository

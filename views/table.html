@@ -1,0 +1,18 @@
+<table class="w-full text-left">
+    <thead class="relative isolate text-left text-sm font-semibold text-gray-900">
+        <td class="p-2">ID</td>
+        <td class="p-2">Short URL</td>
+        <td class="p-2">Full URL</td>
+    </thead>
+
+    {{range .urlData}}
+
+    <tbody class="divide-y divide-gray-200 border-b border-gray-200 text-sm sm:border-t p-2"></tbody>
+    <tr class="relative py-4 pr-3 text-sm font-medium text-gray-700">
+        <td class="p-2">{{.Id}} </td>
+        <td class="p-2 text-blue-600"><a target="#" href="/{{.ShortUrl}}">{{.ShortUrl}}</a></td>
+        <td class="p-2 truncate max-w-xs">{{.Url}}</td>
+    </tr>
+    </tbody>
+    {{end}}
+</table>
