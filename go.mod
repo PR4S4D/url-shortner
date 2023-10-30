@@ -1,6 +1,6 @@
 module url-shortner
 
-go 1.21.3
+go 1.17
 
 require (
 	github.com/gofiber/fiber/v2 v2.50.0
